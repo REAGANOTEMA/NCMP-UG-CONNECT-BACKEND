@@ -26,24 +26,20 @@ try {
 }
 
 /**
- * sendNotification
- * @param {string} token - device token to send notification
+ * Send FCM notification
+ * @param {string} token - device token
  * @param {string} title - notification title
  * @param {string} body - notification body
  * @param {object} data - optional key-value pairs
  */
 export const sendNotification = async (token, title, body, data = {}) => {
+  if (!token) throw new Error("No device token provided");
+
+  const message = { token, notification: { title, body }, data };
+
   try {
-    if (!token) throw new Error("No device token provided");
-
-    const message = {
-      token,
-      notification: { title, body },
-      data,
-    };
-
     const response = await admin.messaging().send(message);
-    console.log("✅ Notification sent successfully:", response);
+    console.log("✅ Notification sent:", response);
     return response;
   } catch (err) {
     console.error("❌ Error sending notification:", err);
@@ -51,5 +47,4 @@ export const sendNotification = async (token, title, body, data = {}) => {
   }
 };
 
-// Export default admin for general Firebase use
 export default admin;

@@ -5,7 +5,7 @@ import morgan from "morgan";
 
 import { connectDB } from "./config/db.js";
 import { initSocket } from "./utils/socket.js";
-import "./config/firebase.js"; // ✅ Initialize Firebase
+import "./config/firebase.js"; // ✅ Firebase initialized
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
