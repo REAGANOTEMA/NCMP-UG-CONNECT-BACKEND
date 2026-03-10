@@ -2,7 +2,7 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Build Firebase service account using environment variables
+// Firebase service account from environment variables
 const serviceAccount = {
   type: "service_account",
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -25,13 +25,6 @@ try {
   console.error("❌ Firebase initialization error:", error);
 }
 
-/**
- * Send FCM notification
- * @param {string} token - device token
- * @param {string} title - notification title
- * @param {string} body - notification body
- * @param {object} data - optional key-value pairs
- */
 export const sendNotification = async (token, title, body, data = {}) => {
   if (!token) throw new Error("No device token provided");
 

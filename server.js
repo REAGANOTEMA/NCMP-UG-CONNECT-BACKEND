@@ -5,7 +5,7 @@ import morgan from "morgan";
 
 import { connectDB } from "./config/db.js";
 import { initSocket } from "./utils/socket.js";
-import "./config/firebase.js"; // ✅ Firebase initialized
+import "./config/firebase.js"; // Initialize Firebase
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
@@ -46,7 +46,7 @@ const startServer = async () => {
     const server = app.listen(PORT, () =>
       console.log(`🚀 Server running on port ${PORT}`)
     );
-    initSocket(server); // Initialize real-time chat
+    initSocket(server); // Initialize socket.io
   } catch (err) {
     console.error("❌ Server failed to start:", err);
     process.exit(1);
