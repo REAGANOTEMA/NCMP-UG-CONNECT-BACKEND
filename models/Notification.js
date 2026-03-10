@@ -1,15 +1,15 @@
+// models/Notification.js
 import { DataTypes } from "sequelize";
-import db from "../config/db.js";
+import sequelize from "../config/db.js";
 import User from "./User.js";
 
-const Notification = db.define("notifications", {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-  userId: { type: DataTypes.UUID, allowNull: false },
-  type: { type: DataTypes.STRING },
-  content: { type: DataTypes.TEXT },
+const Notification = sequelize.define("Notification", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  user_id: { type: DataTypes.INTEGER, references: { model: User, key: "id" } },
+  title: DataTypes.STRING,
+  body: DataTypes.TEXT,
   read: { type: DataTypes.BOOLEAN, defaultValue: false },
-});
-
-Notification.belongsTo(User, { foreignKey: "userId" });
+  data: { type: DataTypes.JSONB, defaultValue: {} },
+}, { tableName: "notifications", timestamps: true });
 
 export default Notification;

@@ -2,10 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
-
 import { connectDB } from "./config/db.js";
 import { initSocket } from "./utils/socket.js";
-import "./config/firebase.js"; // Initialize Firebase
+import "./config/firebase.js"; // Firebase
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
@@ -37,16 +36,15 @@ app.use("/api/mp-profiles", mpRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/notifications", notificationsRoutes);
 
-// Start server
+// Start Server
 const PORT = process.env.PORT || 5000;
-
 const startServer = async () => {
   try {
     await connectDB();
     const server = app.listen(PORT, () =>
       console.log(`🚀 Server running on port ${PORT}`)
     );
-    initSocket(server); // Initialize socket.io
+    initSocket(server); // Socket.IO for chat / video / voice
   } catch (err) {
     console.error("❌ Server failed to start:", err);
     process.exit(1);

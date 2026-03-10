@@ -1,17 +1,18 @@
+// models/Project.js
 import { DataTypes } from "sequelize";
-import db from "../config/db.js";
-import User from "./User.js";
+import sequelize from "../config/db.js";
+import MPProfile from "./MPProfile.js";
 
-const Project = db.define("projects", {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-  mpId: { type: DataTypes.UUID, allowNull: false },
-  title: { type: DataTypes.STRING, allowNull: false },
-  description: { type: DataTypes.TEXT, allowNull: false },
-  status: { type: DataTypes.STRING, defaultValue: "pending" },
-  startDate: { type: DataTypes.DATE },
-  endDate: { type: DataTypes.DATE },
-});
-
-Project.belongsTo(User, { foreignKey: "mpId" });
+const Project = sequelize.define("Project", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  mp_id: { type: DataTypes.INTEGER, references: { model: MPProfile, key: "id" } },
+  title: DataTypes.STRING,
+  description: DataTypes.TEXT,
+  status: { type: DataTypes.STRING, defaultValue: "ongoing" },
+  start_date: DataTypes.DATE,
+  end_date: DataTypes.DATE,
+  budget: DataTypes.NUMERIC,
+  location: DataTypes.TEXT,
+}, { tableName: "projects", timestamps: true });
 
 export default Project;

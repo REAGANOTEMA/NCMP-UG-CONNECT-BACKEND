@@ -2,7 +2,6 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Firebase service account from environment variables
 const serviceAccount = {
   type: "service_account",
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -29,7 +28,6 @@ export const sendNotification = async (token, title, body, data = {}) => {
   if (!token) throw new Error("No device token provided");
 
   const message = { token, notification: { title, body }, data };
-
   try {
     const response = await admin.messaging().send(message);
     console.log("✅ Notification sent:", response);

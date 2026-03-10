@@ -1,22 +1,24 @@
+// models/MPProfile.js
 import { DataTypes } from "sequelize";
-import db from "../config/db.js";
+import sequelize from "../config/db.js";
 import User from "./User.js";
 
-const MPProfile = db.define("mp_profiles", {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-  userId: { type: DataTypes.UUID, allowNull: false },
-  constituency: { type: DataTypes.STRING, allowNull: false },
-  district: { type: DataTypes.STRING, allowNull: false },
-  region: { type: DataTypes.STRING, allowNull: false },
-  party: { type: DataTypes.STRING, allowNull: false },
-  term: { type: DataTypes.STRING, allowNull: false },
-  committees: { type: DataTypes.ARRAY(DataTypes.STRING) },
-  bio: { type: DataTypes.TEXT },
-  contact: { type: DataTypes.STRING },
+const MPProfile = sequelize.define("MPProfile", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  user_id: { type: DataTypes.INTEGER, references: { model: User, key: "id" } },
+  full_name: DataTypes.STRING,
+  profile_photo: DataTypes.TEXT,
+  constituency_id: DataTypes.INTEGER,
+  political_party: DataTypes.STRING,
+  term_start: DataTypes.DATE,
+  term_end: DataTypes.DATE,
+  committees: DataTypes.TEXT,
+  education: DataTypes.TEXT,
+  biography: DataTypes.TEXT,
+  contact_info: DataTypes.TEXT,
+  office_address: DataTypes.TEXT,
   verified: { type: DataTypes.BOOLEAN, defaultValue: true },
-  photo: { type: DataTypes.STRING },
-});
-
-MPProfile.belongsTo(User, { foreignKey: "userId" });
+  performance_metrics: { type: DataTypes.JSONB, defaultValue: {} },
+}, { tableName: "mp_profiles", timestamps: true });
 
 export default MPProfile;

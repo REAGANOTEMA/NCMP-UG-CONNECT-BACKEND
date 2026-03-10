@@ -1,19 +1,16 @@
+// models/Post.js
 import { DataTypes } from "sequelize";
-import db from "../config/db.js";
+import sequelize from "../config/db.js";
 import User from "./User.js";
 
-const Post = db.define("posts", {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-  authorId: { type: DataTypes.UUID, allowNull: false },
-  content: { type: DataTypes.TEXT, allowNull: false },
-  media: { type: DataTypes.ARRAY(DataTypes.STRING) },
-  region: { type: DataTypes.STRING },
-  district: { type: DataTypes.STRING },
-  constituency: { type: DataTypes.STRING },
+const Post = sequelize.define("Post", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  user_id: { type: DataTypes.INTEGER, references: { model: User, key: "id" } },
+  content: DataTypes.TEXT,
+  media: { type: DataTypes.JSONB, defaultValue: [] },
+  tags: { type: DataTypes.JSONB, defaultValue: [] },
   likes: { type: DataTypes.INTEGER, defaultValue: 0 },
   shares: { type: DataTypes.INTEGER, defaultValue: 0 },
-});
-
-Post.belongsTo(User, { foreignKey: "authorId" });
+}, { tableName: "posts", timestamps: true });
 
 export default Post;
