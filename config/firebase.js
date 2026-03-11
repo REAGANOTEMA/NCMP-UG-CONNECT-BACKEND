@@ -3,11 +3,10 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Build the service account object safely
 const serviceAccount = {
   type: "service_account",
   project_id: process.env.FIREBASE_PROJECT_ID,
-  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID || "", // optional
+  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID || "",
   private_key: process.env.FIREBASE_PRIVATE_KEY
     ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
     : undefined,
@@ -19,7 +18,6 @@ const serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
 };
 
-// Initialize Firebase Admin safely
 try {
   if (!admin.apps.length) {
     admin.initializeApp({
@@ -32,15 +30,9 @@ try {
   console.error(error);
 }
 
-// Helper function to send push notifications
 export const sendNotification = async (token, title, body, data = {}) => {
-  if (!token) {
-    console.warn("⚠️ No device token provided, skipping notification");
-    return;
-  }
-
+  if (!token) return;
   const message = { token, notification: { title, body }, data };
-
   try {
     const response = await admin.messaging().send(message);
     console.log("✅ Notification sent:", response);

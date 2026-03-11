@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { connectDB } from "./config/db.js";
 import { initSocket } from "./utils/socket.js";
-import "./config/firebase.js"; // Firebase
+import "./config/firebase.js"; // Firebase Admin
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
@@ -47,7 +47,7 @@ const startServer = async () => {
     const server = app.listen(PORT, () =>
       console.log(`🚀 Server running on port ${PORT}`)
     );
-    initSocket(server); // Socket.IO for chat / video / voice
+    initSocket(server); // Socket.IO
   } catch (err) {
     console.error("❌ Server failed to start:", err);
     process.exit(1);
