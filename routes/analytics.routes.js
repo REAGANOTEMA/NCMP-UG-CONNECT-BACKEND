@@ -1,6 +1,6 @@
 import express from "express";
 import { getEngagement, getTrending } from "../controllers/analytics.controller.js";
-import { authMiddleware } from "../middleware/auth.middleware.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
