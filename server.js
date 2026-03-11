@@ -21,7 +21,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -35,6 +35,9 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/mp-profiles", mpRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/notifications", notificationsRoutes);
+
+// Health Check
+app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 // Start Server
 const PORT = process.env.PORT || 5000;
