@@ -1,8 +1,8 @@
-// config/firebase.js
 import admin from "firebase-admin";
 import dotenv from "dotenv";
 dotenv.config();
 
+// Firebase service account configuration
 const serviceAccount = {
   type: "service_account",
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -18,18 +18,20 @@ const serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
 };
 
+// Firebase initialization
 try {
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
+    console.log("✅ Firebase initialized successfully");
   }
-  console.log("✅ Firebase initialized successfully");
 } catch (error) {
   console.error("❌ Firebase initialization error:", error.message);
   console.error(error);
 }
 
+// Function to send notifications via Firebase Cloud Messaging
 export const sendNotification = async (token, title, body, data = {}) => {
   if (!token) return;
   const message = { token, notification: { title, body }, data };
